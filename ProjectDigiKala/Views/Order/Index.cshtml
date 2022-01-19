@@ -1,0 +1,149 @@
+﻿@using ProjectDigiKala.Models.Orders
+@model OrderIndexViewModel
+@{
+    ViewBag.Title = "ثبت شفارش";
+    int index = 0;
+}
+
+@section styles {
+    <link href="~/css/order-index.css" rel="stylesheet" />
+}
+
+<section class="panel wide-wrap">
+    <h1 class="panel-title">ثبت سفارش</h1>
+    <div class="panel-content">
+        <div class="order-summary">
+            <div class="order-summary-price-wrap">
+                <span class="order-summary-price-text">مبلغ قابل پرداخت:</span>
+                <span class="order-summary-price-value">@Model.TotalPrice تومان</span>
+            </div>
+            <a asp-controller="Cart" asp-action="Index" class="button cart-button">
+                <span class="button-text">سبد خرید</span>
+            </a>
+        </div>
+        <form asp-controller="Order" asp-action="Save" method="get" class="order-form">
+            <section class="order-form-section">
+                <h2 class="order-form-header">اطلاعات تماس</h2>
+                @if (Model.Addresses.Any())
+                {
+                    foreach (var address in Model.Addresses)
+                    {
+                        if (index == 0)
+                        {
+                            <div class="order-form-content">
+                                <div class="order-form-group selected-order-form-group">
+                                    <label for="address-@index" class="order-form-label">
+                                        <span class="address-span">@address.Province</span>
+                                        <span class="address-span">@address.City</span>
+                                        <span class="address-span">@address.Location</span>
+                                        <span class="address-phone">شماره تماس: @address.Phone</span>
+                                    </label>
+                                    <input type="radio" id="address-@index" name="address" value="@address.Id" class="order-form-input" checked="checked" />
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="order-form-content">
+                                <div class="order-form-group">
+                                    <label for="address-@index" class="order-form-label">
+                                        <span class="address-span">@address.Province</span>
+                                        <span class="address-span">@address.City</span>
+                                        <span class="address-span">@address.Location</span>
+                                        <span class="address-phone">شماره تماس: @address.Phone</span>
+                                    </label>
+                                    <input type="radio" id="address-@index" name="address" value="@address.Id" class="order-form-input" />
+                                </div>
+                            </div>
+                        }
+                        index++;
+                    }
+                }
+                else
+                {
+                    <p class="addresses-null">شما تا کنون نشانی منزل یا محل کار خود را ثبت نکرده اید، برای این کار میتوانید از طریق پروفایل خود اقدام به ثبت نشانی کرده و سپس مراحل خرید خود را تکمیل کنید.</p>
+                }
+                @{
+                    index = 0;
+                }
+            </section>
+            <section class="order-form-section">
+                <h2 class="order-form-header">نحوه ارسال</h2>
+                <div class="order-form-content">
+                    <ul class="order-form-content-type-list shipment-type">
+                        <li class="order-form-content-type-item active-shipment">
+                            <input type="radio" id="shipment-type-1" name="shippingType" value="@((byte)ShippingType.immediately)" class="order-form-content-type-item-input" checked />
+                            <div class="order-form-content-type-item-photo-wrap">
+                                <img src="~/images/fastest-shipment-icon.png" alt="Type" class="order-form-content-type-item-photo" />
+                            </div>
+                            <div class="order-form-content-type-item-content">
+                                <h4 class="order-form-content-type-item-text">پست پیشتاز (15,000 تومان)</h4>
+                                <p class="order-form-content-type-item-info">ارسال کالا در سریعترین زمان ممکن. با انتخاب این گزینه کالای شما بدون قرار گرفتن در صف انتظار به صورت فوری پیگیری می شود و روند ارسال کالا برای شما تا حد زیادی سریعتر پیش می رود. زین پس فقط دارم یه چیزی مینویسم که صفحه پر باشه و بشه یه مقدار حرف برای گفتن داشت.</p>
+                            </div>
+                        </li>
+                        <li class="order-form-content-type-item">
+                            <input type="radio" id="shipment-type-2" name="shippingType" value="@((byte)ShippingType.Common)" class="order-form-content-type-item-input" />
+                            <div class="order-form-content-type-item-photo-wrap">
+                                <img src="~/images/common-shipment-icon.png" alt="Type" class="order-form-content-type-item-photo" />
+                            </div>
+                            <div class="order-form-content-type-item-content">
+                                <h4 class="order-form-content-type-item-text">پست معمولی (12,000 تومان)</h4>
+                                <p class="order-form-content-type-item-info">ارسال کالا در سریعترین زمان ممکن. با انتخاب این گزینه کالای شما بدون قرار گرفتن در صف انتظار به صورت فوری پیگیری می شود و روند ارسال کالا برای شما تا حد زیادی سریعتر پیش می رود. زین پس فقط دارم یه چیزی مینویسم که صفحه پر باشه و بشه یه مقدار حرف برای گفتن داشت.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="order-form-section">
+                <h2 class="order-form-header">نحوه پرداخت</h2>
+                <div class="order-form-content">
+                    <ul class="order-form-content-type-list payment-type">
+                        <li class="order-form-content-type-item active-shipment">
+                            <input type="radio" id="payment-type-1" name="paymentType" value="@((byte)PaymentType.Variz)" class="order-form-content-type-item-input" checked />
+                            <div class="order-form-content-type-item-photo-wrap">
+                                <img src="~/images/transfer-payment-icon.png" alt="Type" class="order-form-content-type-item-photo" />
+                            </div>
+                            <div class="order-form-content-type-item-content">
+                                <h4 class="order-form-content-type-item-text">واریز به حساب</h4>
+                                <p class="order-form-content-type-item-info">واریز به شماره حساب گروه فروشگاه اینترنتی</p>
+                            </div>
+                        </li>
+                        <li class="order-form-content-type-item">
+                            <input type="radio" id="payment-type-2" name="paymentType" value="@((byte)PaymentType.CartToCart)" class="order-form-content-type-item-input" />
+                            <div class="order-form-content-type-item-photo-wrap">
+                                <img src="~/images/card-payment-icon.png" alt="Type" class="order-form-content-type-item-photo" />
+                            </div>
+                            <div class="order-form-content-type-item-content">
+                                <h4 class="order-form-content-type-item-text">کارت به کارت</h4>
+                                <p class="order-form-content-type-item-info">واریز به کارت عادل بخشی مسئول فروشگاه اینترنتی</p>
+                            </div>
+                        </li>
+                        <li class="order-form-content-type-item">
+                            <input type="radio" id="payment-type-2" name="paymentType" value="@((byte)PaymentType.Home)" class="order-form-content-type-item-input" />
+                            <div class="order-form-content-type-item-photo-wrap">
+                                <img src="~/images/home-payment-icon.png" alt="Type" class="order-form-content-type-item-photo" />
+                            </div>
+                            <div class="order-form-content-type-item-content">
+                                <h4 class="order-form-content-type-item-text">پرداخت درب منزل</h4>
+                                <p class="order-form-content-type-item-info">فقط مخصوص شهروندان نهبندانی</p>
+                            </div>
+                        </li>
+                        <li class="order-form-content-type-item">
+                            <input type="radio" id="payment-type-2" name="paymentType" value="@((byte)PaymentType.Online)" class="order-form-content-type-item-input" />
+                            <div class="order-form-content-type-item-photo-wrap">
+                                <img src="~/images/online-payment-icon.png" alt="Type" class="order-form-content-type-item-photo" />
+                            </div>
+                            <div class="order-form-content-type-item-content">
+                                <h4 class="order-form-content-type-item-text">پرداخت آنلاین</h4>
+                                <p class="order-form-content-type-item-info">پرداخت با استفاده از درگاه پرداخت آنلاین</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <button type="submit" class="button cart-button">
+                <span class="button-text">ثبت سفارش</span>
+            </button>
+        </form>
+    </div>
+</section>

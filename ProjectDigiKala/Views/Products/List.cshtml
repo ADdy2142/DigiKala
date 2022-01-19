@@ -1,0 +1,197 @@
+﻿@using ProjectDigiKala.Data.Repositories
+@using ProjectDigiKala.Models.Products
+@model IEnumerable<ProjectDigiKala.ViewModels.ProductsListViewModel>
+@inject ISpecificationGroupRepository SpecificationGroupRepository
+@{
+    ViewBag.Title = "لیست کالاها";
+    var groups = Model.Select(model => model.Group).Distinct().ToList();
+    var brands = Model.Select(model => model.Brand).Distinct().ToList();
+    var specificationGroups = new List<SpecificationGroup>();
+    foreach (var groupSpecs in groups)
+    {
+        var foundItems = await SpecificationGroupRepository.GetSpecificationGroupsAsync(groupSpecs.Id);
+        specificationGroups.AddRange(foundItems);
+    }
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/products-list.css" />
+}
+
+<form asp-controller="Products" asp-action="List" method="get" id="productList" class="product-list wide-wrap">
+    @if (ViewBag.SearchText != null)
+    {
+        <input type="hidden" name="search" value="@ViewBag.SearchText" />
+    }
+    <div class="product-list-side">
+        <section class="product-list-side-section md-radius">
+            <h3 class="product-list-side-section-header">گروه کالاها</h3>
+            <div class="product-list-side-section-content">
+                <ul class="product-list-side-group">
+                    @foreach (var group in groups)
+                    {
+                        <li class="product-list-side-item">
+                            <a asp-controller="Products" asp-action="Group" asp-route-groupId="@group.Id" asp-route-groupTitle="@group.Title" class="product-list-side-link">@group.Title</a>
+                            @*<ul class="product-list-side-group">
+                                    <li class="product-list-side-item">
+                                        <a href="#" class="product-list-side-link">گوشی موبایل</a>
+                                    </li>
+                                    <li class="product-list-side-item">
+                                        <a href="#" class="product-list-side-link">لوازم جانبی گوشی موبایل</a>
+                                    </li>
+                                    <li class="product-list-side-item">
+                                        <a href="#" class="product-list-side-link">لپ تاپ و نوت بوک</a>
+                                    </li>
+                                </ul>*@
+                        </li>
+                    }
+                </ul>
+            </div>
+        </section>
+        <section class="product-list-side-section md-radius">
+            <h3 class="product-list-side-section-header">قیمت</h3>
+            <div class="product-list-side-section-content">
+                <div class="product-list-side-price">
+                    <label for="fromPrice" class="product-list-side-price-label">از:</label>
+                    <input type="text" name="fromPrice" id="fromPrice" value="" class="product-list-side-price-input" autocomplete="off" />
+                </div>
+                <div class="product-list-side-price">
+                    <label for="toPrice" class="product-list-side-price-label">تا:</label>
+                    <input type="text" name="toPrice" id="toPrice" value="" class="product-list-side-price-input" autocomplete="off" />
+                </div>
+            </div>
+        </section>
+        <section class="product-list-side-section md-radius">
+            <h3 class="product-list-side-section-header">برند</h3>
+            <div class="product-list-side-section-content">
+                <ul class="product-list-side-brands">
+                    @foreach (var brand in brands)
+                    {
+                        <li class="product-list-side-brands-item">
+                            <label class="product-list-side-brands-name"><input type="checkbox" name="brands" value="@brand.Id" class="product-list-side-brands-input mdi mdi-check" /> @brand.Title</label>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </section>
+        <section class="product-list-side-section md-radius">
+            <h3 class="product-list-side-section-header">مشخصات فنی</h3>
+            <div class="product-list-side-section-content">
+                <ul class="product-list-side-specs">
+                    @foreach (var specificationGroup in specificationGroups)
+                    {
+                        <li class="product-list-side-specs-item">
+                            <p class="product-list-side-specs-header">
+                                <span>@specificationGroup.Title</span>
+                                <label class="product-list-side-specs-toggle mdi mdi-plus-box mdi-18px"></label>
+                                <label class="product-list-side-specs-toggle mdi mdi-minus-box mdi-18px"></label>
+                            </p>
+                            <ul class="product-list-side-specs-values">
+                                @foreach (var specification in specificationGroup.Specifications)
+                                {
+                                    <li class="product-list-side-specs-value">
+                                        <label class="product-list-side-specs-value-name"><input type="checkbox" name="specs" value="@specification.Id" class="product-list-side-specs-value-input mdi mdi-check" /> @specification.Title</label>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </section>
+        <div class="product-list-side-actions">
+            <button type="submit" class="button md-radius">
+                <span class="button-text">جستجو</span>
+            </button>
+        </div>
+    </div>
+    <div class="product-list-content">
+        <div class="product-list-header clear-fix">
+            <h1 class="product-list-title">@ViewBag.ProductsListTitle</h1>
+            <span class="product-list-search">
+                <input type="text" name="keyword" id="keyword" value="" class="product-list-search-input" placeholder="جستجو..." />
+                <label for="keyword" class="product-list-search-label mdi mdi-magnify mdi-24px"></label>
+            </span>
+        </div>
+        <div class="product-list-actions">
+            <div class="product-list-actions-info">
+                <div class="product-list-actions-page-size-wrap mdi mdi-chevron-down">
+                    <select class="product-list-actions-page-size" name="pageSize">
+                        <option value="20">20</option>
+                        <option value="40">40</option>
+                        <option value="60">60</option>
+                    </select>
+                </div>
+                <span class="product-list-actions-total">@Model.Count() کالا</span>
+            </div>
+            <div class="product-list-actions-pager">
+                <a href="#" class="product-list-actions-pager-button">1</a>
+                <span class="product-list-actions-pager-seperator">...</span>
+                <a href="#" class="product-list-actions-pager-button">5</a>
+                <a href="#" class="product-list-actions-pager-button active-pager">6</a>
+                <a href="#" class="product-list-actions-pager-button">7</a>
+                <span class="product-list-actions-pager-seperator">...</span>
+                <a href="#" class="product-list-actions-pager-button">22</a>
+            </div>
+        </div>
+        <ul class="products-list">
+            @if (Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <li class="products-list-item">
+                        <div class="products-list-item-photo-wrap">
+                            <a asp-controller="Products" asp-action="Item" asp-route-id="@item.Id" asp-route-productName="@item.SecondaryTitle.Replace(' ', '-')" class="products-list-item-photo-link">
+                                <img src="~/images/@item.Photo" alt="@item.PrimaryTitle" title="@item.PrimaryTitle" class="products-list-item-photo-img" />
+                            </a>
+                        </div>
+                        <div class="products-list-item-title-wrap">
+                            <a asp-controller="Products" asp-action="Item" asp-route-id="@item.Id" asp-route-productName="@item.SecondaryTitle.Replace(' ', '-')" class="products-list-item-primary-title">@item.PrimaryTitle</a>
+                            <a asp-controller="Products" asp-action="Item" asp-route-id="@item.Id" asp-route-productName="@item.SecondaryTitle.Replace(' ', '-')" class="products-list-item-secondary-title">@item.SecondaryTitle</a>
+                        </div>
+                        @if (item.Price != null)
+                        {
+                            <div class="products-list-item-state">
+                                <span class="products-list-item-price">@item.Price <small class="products-list-item-price-toman">تومان</small></span>
+                                <a asp-controller="Cart" asp-action="Index" asp-route-productItemId="@item.ProductItemId" asp-route-count="1" class="button products-list-item-button mdi mdi-cart-plus mdi-24px" title="افزودن محصول به سبد خرید"></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="products-list-item-unavailable">
+                                <span class="products-list-item-price">ناموجود</span>
+                            </div>
+                        }
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="products-list-item-empty">
+                    <p class="products-list-item-empty-message">هیچ موردی برای نمایش وجود ندارد.</p>
+                </li>
+            }
+        </ul>
+        <div class="product-list-actions">
+            <div class="product-list-actions-info">
+                <div class="product-list-actions-page-size-wrap mdi mdi-chevron-down">
+                    <select class="product-list-actions-page-size" name="pageSize">
+                        <option value="20">20</option>
+                        <option value="40">40</option>
+                        <option value="60">60</option>
+                    </select>
+                </div>
+                <span class="product-list-actions-total">@Model.Count() کالا</span>
+            </div>
+            <div class="product-list-actions-pager">
+                <a href="#" class="product-list-actions-pager-button">1</a>
+                <span class="product-list-actions-pager-seperator">...</span>
+                <a href="#" class="product-list-actions-pager-button">5</a>
+                <a href="#" class="product-list-actions-pager-button active-pager">6</a>
+                <a href="#" class="product-list-actions-pager-button">7</a>
+                <span class="product-list-actions-pager-seperator">...</span>
+                <a href="#" class="product-list-actions-pager-button">22</a>
+            </div>
+        </div>
+    </div>
+</form>

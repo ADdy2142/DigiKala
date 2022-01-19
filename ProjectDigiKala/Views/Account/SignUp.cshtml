@@ -1,0 +1,87 @@
+﻿@model SignUpViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="دیجی کالا, DigiKala, سایت دیجی کالا, فروشگاه اینترنتی دیجی کالا" />
+    <meta name="description" content="فروشگاه اینترنتی دیجی کالا. انواع کالاهای دیجیتال، لوازم منزل، خوراک، پوشاک، صنایع دستی و ..." />
+
+    <!-- Start styles -->
+    <link rel="stylesheet" href="~/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="~/css/index.css" />
+    <link rel="stylesheet" href="~/css/account.css" />
+    <!-- End styles -->
+
+    <title>ورود - DigiKala</title>
+</head>
+<body>
+    <div class="full-height">
+        <div class="account-side-bg">
+            <img src="~/images/account-side-bg.png" alt="Account side background" class="account-side-bg-image" />
+        </div>
+        <div class="account-content sign-up-content md-shadow">
+            <div class="content-top-image">
+                <img src="~/images/login-top-image.jpg" alt="Login top image" class="content-top-image-image" />
+            </div>
+            <form asp-controller="Account" asp-action="SignUp" method="post" class="account-form sign-up-form">
+                <div class="account-form-group">
+                    <label asp-for="FirstName" class="account-form-label">نام</label>
+                    <input type="text" asp-for="FirstName" value="" class="account-form-input open-sans-font" />
+                    <div class="error-text">
+                        <span asp-validation-for="FirstName"></span>
+                    </div>
+                </div>
+                <div class="account-form-group">
+                    <label asp-for="LastName" class="account-form-label">نام خانوادگی</label>
+                    <input type="text" asp-for="LastName" value="" class="account-form-input open-sans-font" />
+                    <div class="error-text">
+                        <span asp-validation-for="LastName"></span>
+                    </div>
+                </div>
+                <div class="account-form-group full-width">
+                    <label asp-for="Email" class="account-form-label">ایمیل</label>
+                    <input type="text" asp-for="Email" value="" class="account-form-input open-sans-font" />
+                    <div class="error-text">
+                        <span asp-validation-for="Email"></span>
+                    </div>
+                </div>
+                <div class="account-form-group">
+                    <label asp-for="Password" class="account-form-label">کلمه عبور</label>
+                    <input type="password" asp-for="Password" value="" class="account-form-input" />
+                    <div class="error-text">
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                </div>
+                <div class="account-form-group">
+                    <label asp-for="ConfirmPassword" class="account-form-label">تکرار کلمه عبور</label>
+                    <input type="password" asp-for="ConfirmPassword" value="" class="account-form-input" />
+                    <div class="error-text">
+                        <span asp-validation-for="ConfirmPassword"></span>
+                    </div>
+                </div>
+                <div class="account-form-group full-width account-form-group-actions clear-fix">
+                    <button type="submit" class="button">
+                        <span class="button-text">ثبت نام</span>
+                    </button>
+                    <a asp-controller="Account" asp-action="SignIn" class="button">
+                        <span class="button-text">ورود</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Start scripts -->
+    <script src="~/jquery/jquery.min.js"></script>
+    <script src="~/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/index.js"></script>
+    <!-- End scripts -->
+</body>
+</html>

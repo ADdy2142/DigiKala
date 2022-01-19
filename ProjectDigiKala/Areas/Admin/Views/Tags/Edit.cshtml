@@ -1,0 +1,45 @@
+﻿@model Tag 
+@{
+    ViewBag.Title = "ویرایش برچسب";
+}
+
+@section breadcrumb {
+    <!-- Start breadcrumb -->
+    <nav page-breadcrumbs="@ViewBag.Breadcrumbs"></nav>
+    <!-- End breadcrumb -->
+}
+
+<div class="card mb-5">
+    <div class="card-header text-right d-flex justify-content-between align-items-center border-bottom-0">
+        <h3 class="mb-0">ویرایش برچسب</h3>
+        <div>
+            <a asp-area="Admin" asp-controller="Tags" asp-action="List" class="btn btn-outline-success btn-sm" role="button">لیست برچسب ها</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-area="Admin" asp-controller="Tags" asp-action="Edit" class="text-right">
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="col-12 text-danger" asp-validation-summary="All"></div>
+                <input type="hidden" name="id" />
+                <div class="form-group col-12 col-md-6 col-xl-4">
+                    <label asp-for="Title">عنوان</label>
+                    <input class="form-control" asp-for="Title">
+                </div>
+                <div class="form-group col-12 col-md-6 col-xl-4 row states">
+                    <label for="" class="col-form-label pt-0 col-12">وضعیت</label>
+                    <div class="form-check custom-form-check col-3">
+                        <input class="form-check-input" type="radio" name="State" id="enable-state" value="1" @(Model.State == State.Enable ? "checked" : null)>
+                        <label class="form-check-label" for="enable-state">فعال</label>
+                    </div>
+                    <div class="form-check custom-form-check col-3">
+                        <input class="form-check-input" type="radio" name="State" id="disable-state" value="2" @(Model.State == State.Disable ? "checked" : null)>
+                        <label class="form-check-label" for="disable-state">غیرفعال</label>
+                    </div>
+                    <small class="col-12 text-info small">تنها در صورتی که تمایل به تغییر وضعیت گروه دارید وضعیت را مشخص کنید.</small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success float-left">ذخیره</button>
+        </form>
+    </div>
+</div>

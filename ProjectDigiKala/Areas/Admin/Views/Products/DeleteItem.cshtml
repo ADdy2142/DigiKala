@@ -1,0 +1,29 @@
+﻿@model DeleteProductItemViewModel
+@{
+    ViewBag.Title = "حذف";
+}
+
+@section breadcrumb {
+    <!-- Start breadcrumb -->
+    <nav page-breadcrumbs="@ViewBag.Breadcrumbs"></nav>
+    <!-- End breadcrumb -->
+}
+
+<div class="card my-5 shadow-lg text-right rounded-lg">
+    <div class="card-header text-right d-flex justify-content-between align-items-center border-bottom-0">
+        <h3 class="mb-0">حذف قلم کالا</h3>
+        <div>
+            <a asp-area="Admin" asp-controller="Products" asp-route-productId="@Model.ProductId" asp-route-productName="@Model.ProductName" asp-action="Items" class="btn btn-outline-success btn-sm" role="button">لیست اقلام کالا</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">حذف قلم کالا</h5>
+        <p class="card-text">آیا از حذف قلم کالا قلم کالا انتخاب شده اطمینان دارید؟</p>
+        <small class="small text-danger">در صورتی که از ادامه این عملیات اطمینان دارید اقدام به حذف قلم کالا مورد نظر کنید.</small>
+        <form asp-area="Admin" asp-controller="Products" asp-action="DeleteItem" method="post" class="mt-3">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ProductId" />
+            <button type="submit" class="btn btn-outline-danger shadow btn-block">حذف قلم کالا</button>
+        </form>
+    </div>
+</div>

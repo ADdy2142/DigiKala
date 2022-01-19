@@ -1,0 +1,66 @@
+﻿@model Cart
+@{
+    ViewBag.Title = "سبد خرید";
+    double totalPrice = Model.CartItems.Sum(c => c.Quantity * (c.ProductItem.Price - ((c.ProductItem.Discount * c.ProductItem.Price) / 100)));
+    int index = 1;
+}
+
+@section styles {
+    <link href="~/css/cart-index.css" rel="stylesheet" />
+}
+
+<section id="Cart" class="panel wide-wrap">
+    <h1 class="panel-title">سبد خرید</h1>
+    <div class="panel-content">
+        <div class="cart-table">
+            <ul class="cart-table-header">
+                <li class="cart-table-header-item"></li>
+                <li class="cart-table-header-item">کالا</li>
+                <li class="cart-table-header-item">تعداد</li>
+                <li class="cart-table-header-item">قیمت (تومان)</li>
+                <li class="cart-table-header-item">مجموع (تومان)</li>
+                <li class="cart-table-header-item"></li>
+            </ul>
+            <div class="cart-table-body">
+                <div class="cart-table-body-row">
+                    @if (Model.CartItems.Count() > 0)
+                    {
+                        @foreach (var cartItem in Model.CartItems)
+                        {
+                            <ul class="cart-table-body-row-list">
+                                <li class="cart-table-body-row-item">@index</li>
+                                <li class="cart-table-body-row-item">
+                                    <div class="cart-table-body-row-item-product">
+                                        <a asp-controller="Products" asp-action="Item" asp-route-id="@cartItem.ProductItem.Product.Id" asp-route-productName="@cartItem.ProductItem.Product.SecondaryTitle.Replace(' ', '-')" class="cart-table-body-row-item-product-link">@cartItem.ProductItem.Product.PrimaryTitle</a>
+                                        <span class="cart-table-body-row-item-product-primary-text">@cartItem.ProductItem.Product.SecondaryTitle</span>
+                                        <div class="cart-table-body-row-item-product-photo-wrap">
+                                            <img src="~/images/@cartItem.ProductItem.Product.Photo" alt="@cartItem.ProductItem.Product.PrimaryTitle" title="@cartItem.ProductItem.Product.PrimaryTitle" class="cart-table-body-row-item-product-photo" />
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="cart-table-body-row-item">@cartItem.Quantity</li>
+                                <li class="cart-table-body-row-item">@cartItem.ProductItem.Price.ToString("N0")</li>
+                                <li class="cart-table-body-row-item">@((cartItem.Quantity * cartItem.ProductItem.Price).ToString("N0"))</li>
+                                <li class="cart-table-body-row-item">
+                                    <a asp-controller="Cart" asp-action="Remove" asp-route-cartItemId="@cartItem.Id" class="button delete-button">
+                                        <span class="button-text">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            index++;
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-footer-total-price">
+                <span class="cart-footer-total-price-text">مبلغ نهایی:</span>
+                <span class="cart-footer-total-price-value">@totalPrice.ToString("N0") تومان</span>
+            </div>
+            <a asp-controller="Order" asp-action="Index" class="button order-button">
+                <span class="button-text">تکمیل سبد خرید</span>
+            </a>
+        </div>
+    </div>
+</section>

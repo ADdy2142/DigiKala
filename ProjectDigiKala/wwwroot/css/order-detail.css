@@ -1,0 +1,54 @@
+﻿.order-detail {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #dddddd;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.order-detail-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-detail-text {
+    width: 100px;
+    display: inline-block;
+    font-size: 1.6rem;
+    line-height: 1.8;
+    font-family: "EstedadFontBold", sans-serif;
+    color: #cccccc;
+    margin-left: 1rem;
+}
+
+.order-detail-value {
+    flex: 1;
+    display: inline-block;
+    font-size: 1.6rem;
+    line-height: 1.8;
+    font-family: "EstedadFontBold", sans-serif;
+    color: #222222;
+}
+
+.order-shipping-price-wrap {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+}
+
+.order-shipping-price-text {
+    font-size: 1.6rem;
+    line-height: 1.8;
+    font-family: "EstedadFontBold", sans-serif;
+    color: #ef5350;
+    margin-left: 0.5rem;
+}
+
+.order-shipping-price-value {
+    font-size: 1.6rem;
+    line-height: 1.8;
+    font-family: "EstedadFontBold", sans-serif;
+    color: #222222;
+}

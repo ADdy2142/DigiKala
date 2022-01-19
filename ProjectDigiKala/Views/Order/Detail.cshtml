@@ -1,0 +1,99 @@
+﻿@model Order
+@{
+    ViewBag.Title = "جزئیات سفارش";
+    int index = 1;
+}
+
+@section styles {
+    <link href="~/css/order-detail.css" rel="stylesheet" />
+    <link href="~/css/cart-index.css" rel="stylesheet" />
+}
+
+<section class="panel wide-wrap">
+    <h1 class="panel-title">جزئیات سفارش</h1>
+    <div class="panel-content">
+        <div class="cart-table">
+            <ul class="cart-table-header">
+                <li class="cart-table-header-item"></li>
+                <li class="cart-table-header-item">کالا</li>
+                <li class="cart-table-header-item">تعداد</li>
+                <li class="cart-table-header-item">قیمت (تومان)</li>
+                <li class="cart-table-header-item">مجموع (تومان)</li>
+            </ul>
+            <div class="cart-table-body">
+                <div class="cart-table-body-row">
+                    @foreach (var orderItem in Model.OrderItems)
+                    {
+                        <ul class="cart-table-body-row-list">
+                            <li class="cart-table-body-row-item">@index</li>
+                            <li class="cart-table-body-row-item">
+                                <div class="cart-table-body-row-item-product">
+                                    <a asp-controller="Products" asp-action="Item" asp-route-id="@orderItem.ProductItem.Product.Id" class="cart-table-body-row-item-product-link">@orderItem.ProductItem.Product.PrimaryTitle</a>
+                                    <span class="cart-table-body-row-item-product-primary-text">@orderItem.ProductItem.Product.SecondaryTitle</span>
+                                    <div class="cart-table-body-row-item-product-photo-wrap">
+                                        <img src="~/images/@orderItem.ProductItem.Product.Photo" alt="@orderItem.ProductItem.Product.PrimaryTitle" class="cart-table-body-row-item-product-photo" />
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="cart-table-body-row-item">@orderItem.Quantity</li>
+                            <li class="cart-table-body-row-item">@orderItem.Price.ToString("N0")</li>
+                            @{
+                                double totalPrice = orderItem.Quantity * orderItem.Price;
+                            }
+                            <li class="cart-table-body-row-item">@totalPrice.ToString("N0")</li>
+                        </ul>
+                        index++;
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="order-detail">
+                <div class="order-detail-wrap">
+                    <span class="order-detail-text">استان:</span>
+                    <strong class="order-detail-value">@Model.Address.Province</strong>
+                </div>
+                <div class="order-detail-wrap">
+                    <span class="order-detail-text">شهر:</span>
+                    <strong class="order-detail-value">@Model.Address.City</strong>
+                </div>
+                <div class="order-detail-wrap">
+                    <span class="order-detail-text">آدرس:</span>
+                    <strong class="order-detail-value">@Model.Address.Location</strong>
+                </div>
+                <div class="order-detail-wrap">
+                    <span class="order-detail-text">شماره تماس:</span>
+                    <strong class="order-detail-value">@Model.Address.Phone</strong>
+                </div>
+            </div>
+            <div class="cart-footer-total-price">
+                <span class="cart-footer-total-price-text">مجموع سبد خرید:</span>
+                @switch (Model.ShippingType)
+                {
+                    case ShippingType.immediately:
+                        <span class="cart-footer-total-price-value">@((Model.TotalPrice - 15000).ToString("N0")) تومان</span>
+                        break;
+                    case ShippingType.Common:
+                        <span class="cart-footer-total-price-value">@((Model.TotalPrice - 12000).ToString("N0")) تومان</span>
+                        break;
+                }
+            </div>
+            <div class="order-shipping-price-wrap">
+                <span class="order-shipping-price-text">هزینه ارسال:</span>
+                @switch (Model.ShippingType)
+                {
+                    case ShippingType.immediately:
+                        <span class="order-shipping-price-value">15,000 تومان (پست پیشتاز)</span>
+                        break;
+                    case ShippingType.Common:
+                        <span class="order-shipping-price-value">12,000 تومان (پست معمولی)</span>
+                        break;
+                }
+            </div>
+            <div class="order-shipping-price-wrap">
+                <span class="order-shipping-price-text">مبلغ نهایی:</span>
+                <span class="order-shipping-price-value">@Model.TotalPrice.ToString("N0") تومان</span>
+            </div>
+        </div>
+    </div>
+</section>

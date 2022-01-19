@@ -1,0 +1,32 @@
+﻿@model Brand
+@{
+    ViewBag.Title = "حذف";
+}
+
+@section breadcrumb {
+    <!-- Start breadcrumb -->
+    <nav page-breadcrumbs="@ViewBag.Breadcrumbs"></nav>
+    <!-- End breadcrumb -->
+}
+
+<div class="card my-5 shadow-lg text-right rounded-lg">
+    <div class="card-header text-right d-flex justify-content-between align-items-center border-bottom-0">
+        <h3 class="mb-0">حذف برند</h3>
+        <div>
+            <a asp-area="Admin" asp-controller="Brands" asp-action="List" class="btn btn-outline-success btn-sm" role="button">لیست برندها</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">حذف برند @Model.Title</h5>
+        <p class="card-text">آیا از حذف برند <span class="text-danger"><i>@Model.Title</i></span> اطمینان دارید؟</p>
+        <small class="small text-danger">
+            <span>با حذف برند مورد نظر تمام محصولات زیرشاخه این برند نیز حذف خواهند شد.</span>
+            <br />
+            <span>در صورتی که از ادامه این عملیات اطمینان دارید اقدام به حذف برند مورد نظر کنید.</span>
+        </small>
+        <form asp-area="Admin" asp-controller="Brands" asp-action="Delete" method="post" class="mt-3">
+            <input type="hidden" asp-for="@Model.Id" />
+            <button type="submit" class="btn btn-outline-danger shadow btn-block">حذف برند و تمام محصولات زیرشاخه آن</button>
+        </form>
+    </div>
+</div>

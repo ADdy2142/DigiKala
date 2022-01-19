@@ -1,0 +1,83 @@
+﻿@model IEnumerable<KeyPoint>
+@{
+    ViewBag.Title = "لیست نکات کلیدی";
+    int index = 0;
+}
+
+@section breadcrumb {
+    <!-- Start breadcrumb -->
+    <nav page-breadcrumbs="@ViewBag.Breadcrumbs"></nav>
+    <!-- End breadcrumb -->
+}
+
+<div class="card mb-5">
+    <div class="card-header text-right d-flex justify-content-between align-items-center border-bottom-0">
+        <h3 class="mb-0">لیست نکات کلیدی</h3>
+        <div>
+            <a asp-area="Admin" asp-controller="KeyPoints" asp-action="Add" asp-route-productId="@ViewBag.ProductId" class="btn btn-outline-success btn-sm" role="button">افزودن نکته کلیدی</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <p class="text-info text-right">نکات زیر مربوط به محصول <i>@ViewBag.ProductName</i> می باشد.</p>
+        <table class="table table-hover table-striped text-right table-responsive-lg">
+            <thead class="bg-primary">
+                <tr>
+                    <th>#</th>
+                    <th>عنوان</th>
+                    <th>نوع</th>
+                    <th>وضعیت</th>
+                    <th>ایجاد کننده</th>
+                    <th>آخرین ویرایش</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="align-middle">@(++index)</td>
+                            <td class="align-middle">
+                                <span>@item.Title</span>
+                                <br />
+                                <span class="text-muted">شناسه: @item.Id</span>
+                            </td>
+                            <td class="align-middle @(((byte)item.Type) == 1 ? "text-success" : "text-danger")">
+                                @(((byte)item.Type) == 1 ? "نکته مثبت" : "نکته منفی")
+                            </td>
+                            <td class="align-middle @(((byte)item.State) == 1 ? "text-success" : "text-danger")">
+                                @(((byte)item.State) == 1 ? "فعال" : "غیرفعال")
+                            </td>
+                            <td class="align-middle">
+                                <span>@item.Creator.FullName</span>
+                                <br />
+                                <span class="text-muted">@item.CreateDate?.ToPersianDate()</span>
+                            </td>
+                            <td class="align-middle">
+                                <span>@(item.LastModifier?.FullName ?? "--")</span>
+                                <br />
+                                <span class="text-muted">@(item.LastModifyDate?.ToPersianDate() ?? "--")</span>
+                            </td>
+                            <td class="align-middle text-left">
+                                <div class="dropright">
+                                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton">
+                                        <a asp-area="Admin" asp-controller="KeyPoints" asp-action="Edit" asp-route-id="@item.Id" asp-route-productId="@item.Product.Id" class="dropdown-item">ویرایش</a>
+                                        <a asp-area="Admin" asp-controller="KeyPoints" asp-action="Delete" asp-route-id="@item.Id" asp-route-productId="@item.Product.Id" class="dropdown-item text-danger">حذف</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="align-middle text-info text-center" colspan="7">نکته ای برای نمایش وجود ندارد.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

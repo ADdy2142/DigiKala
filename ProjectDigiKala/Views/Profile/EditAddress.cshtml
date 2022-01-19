@@ -1,0 +1,54 @@
+﻿@model EditAddressViewModel
+@{
+    ViewBag.Title = "ویرایش نشانی";
+}
+
+@section styles
+{
+    <link href="~/css/profile-add-edit-address.css" rel="stylesheet" />
+}
+
+<form asp-controller="Profile" asp-action="EditAddress" method="post" class="order-form wide-wrap">
+    <input type="hidden" asp-for="Id" />
+    <section class="order-form-section">
+        <h2 class="order-form-header">اطلاعات تماس</h2>
+        <div class="order-form-content">
+            <div class="order-form-group">
+                <label asp-for="Province" class="order-form-label">استان</label>
+                <input type="text" asp-for="Province" class="order-form-input" />
+                <div class="model-error">
+                    <span asp-validation-for="Province"></span>
+                </div>
+            </div>
+            <div class="order-form-group">
+                <label asp-for="City" class="order-form-label">شهر</label>
+                <input type="text" asp-for="City" class="order-form-input" />
+                <div class="model-error">
+                    <span asp-validation-for="Province"></span>
+                </div>
+            </div>
+            <div class="order-form-group order-form-group-address">
+                <label asp-for="Location" class="order-form-label">نشانی منزل/محل کار</label>
+                <textarea asp-for="Location" class="order-form-input"></textarea>
+                <div class="model-error">
+                    <span asp-validation-for="Province"></span>
+                </div>
+            </div>
+            <div class="order-form-group">
+                <label asp-for="Phone" class="order-form-label">شماره تماس</label>
+                <input type="text" asp-for="Phone" class="order-form-input" />
+                <div class="model-error">
+                    <span asp-validation-for="Province"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="address-actions clear-fix">
+        <button type="submit" class="button save-button">
+            <span class="button-text">ذخیره</span>
+        </button>
+        <a asp-controller="Profile" asp-action="Addresses" class="button">
+            <span class="button-text">بازگشت به لیست</span>
+        </a>
+    </div>
+</form>

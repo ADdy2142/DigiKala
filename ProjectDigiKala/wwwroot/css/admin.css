@@ -1,0 +1,204 @@
+﻿/*Start font-face*/
+@font-face {
+    font-family: "VazirThinFont";
+    src: url("../fonts/Vazir-Thin-FD.eot?#iefix"); /* IE9 Compat Modes */
+    src: url("../fonts/Vazir-Thin-FD.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */ url("../fonts/Vazir-Thin-FD.woff2") format("woff2"), /* Super Modern Browsers */ url("../fonts/Vazir-Thin-FD.woff") format("woff"), /* Pretty Modern Browsers */ url("../fonts/Vazir-Thin-FD.ttf") format("truetype"); /* Safari, Android, iOS */
+    font-style: normal;
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: "VazirRegularFont";
+    src: url("../fonts/Vazir-Regular-FD.eot?#iefix"); /* IE9 Compat Modes */
+    src: url("../fonts/Vazir-Regular-FD.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */ url("../fonts/Vazir-Regular-FD.woff2") format("woff2"), /* Super Modern Browsers */ url("../fonts/Vazir-Regular-FD.woff") format("woff"), /* Pretty Modern Browsers */ url("../fonts/Vazir-Regular-FD.ttf") format("truetype"); /* Safari, Android, iOS */
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "VazirBoldFont";
+    src: url("../fonts/Vazir-Bold-FD.eot?#iefix"); /* IE9 Compat Modes */
+    src: url("../fonts/Vazir-Bold-FD.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */ url("../fonts/Vazir-Bold-FD.woff2") format("woff2"), /* Super Modern Browsers */ url("../fonts/Vazir-Bold-FD.woff") format("woff"), /* Pretty Modern Browsers */ url("../fonts/Vazir-Bold-FD.ttf") format("truetype"); /* Safari, Android, iOS */
+    font-style: normal;
+    font-weight: bold;
+}
+
+/*End font-face*/
+
+/*Start global*/
+* {
+    font-family: "VazirRegularFont", sans-serif;
+}
+
+.breadcrumb-item {
+    padding-left: 0 !important;
+}
+
+    .breadcrumb-item::before {
+        float: right !important;
+        padding-right: 0 !important;
+        padding-left: 0.5rem !important;
+        margin-right: 0.5rem !important;
+    }
+
+    .breadcrumb-item a {
+        text-decoration: none;
+        transition: all ease 0.3s;
+    }
+
+.page-item:first-child .page-link {
+    margin-right: 0;
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.page-item:last-child .page-link {
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+textarea {
+    resize: none !important;
+}
+
+.custom-navbar .navbar-nav .nav-item {
+    position: relative;
+    transition: all ease 0.3s;
+}
+
+    .custom-navbar .navbar-nav .nav-item::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 2px;
+        background-color: #ffffff;
+        bottom: 0;
+        right: 0;
+        transition: all ease 0.3s;
+    }
+
+    .custom-navbar .navbar-nav .nav-item:hover::before {
+        width: 100%;
+    }
+
+.custom-dropdown {
+    position: relative;
+}
+
+    .custom-dropdown .dropdown-menu {
+        position: absolute;
+        display: block;
+        visibility: hidden;
+        top: 160%;
+        right: 0;
+        opacity: 0;
+        transition: all ease 0.3s;
+        border-radius: 0 !important;
+        transition-delay: 0.2s;
+    }
+
+    .custom-dropdown:hover .dropdown-menu {
+        visibility: visible;
+        top: 115%;
+        opacity: 1;
+    }
+
+    .custom-dropdown .dropdown-toggle::after {
+        display: none !important;
+    }
+
+    .custom-dropdown a {
+        transition: all ease 0.3s !important;
+    }
+
+.table thead th {
+    font-family: "VazirBoldFont", sans-serif !important;
+    font-size: 18px;
+    color: #fff;
+}
+
+.custom-file-label::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: unset !important;
+    bottom: 0;
+    z-index: 3;
+    display: block;
+    height: calc(1.5em + .75rem);
+    padding: .375rem .75rem;
+    line-height: 1.5;
+    color: #495057;
+    content: "انتخاب فایل" !important;
+    background-color: #e9ecef;
+    border-right: inherit;
+    border-left: unset !important;
+    border-radius: .25rem 0 0 .25rem;
+}
+
+/*End global*/
+/*Start products*/
+.product-link {
+    color: #222222;
+    transition: all ease 0.3s;
+}
+
+    .product-link:hover {
+        color: #007bff;
+    }
+
+.custom-form-check {
+    padding-left: 0;
+    padding-right: 1.25rem;
+}
+
+    .custom-form-check .form-check-label {
+        margin-right: 20px;
+    }
+
+.filters-card {
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+/*End products*/
+
+/*Start account*/
+.full-height {
+    position: relative;
+    min-height: 100vh;
+}
+
+.page-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    -moz-transform: translateY(-50%) translateX(-50%);
+    -o-transform: translateY(-50%) translateX(-50%);
+    -ms-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.account-card-header {
+    font-family: VazirBoldFont, sans-serif;
+}
+
+.custom-checkbox .form-check-input {
+    right: 0;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.custom-checkbox .form-check-label {
+    display: block;
+    text-align: right;
+    margin-right: 1.2rem;
+}
+
+/*End account*/

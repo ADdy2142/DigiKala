@@ -1,0 +1,132 @@
+﻿@model IEnumerable<Brand>
+@{
+    ViewBag.Title = "لیست برندها";
+}
+
+@section breadcrumb {
+    <!-- Start breadcrumb -->
+    <nav page-breadcrumbs="@ViewBag.Breadcrumbs"></nav>
+    <!-- End breadcrumb -->
+}
+
+<div class="card mb-5">
+    <div class="card-header text-right d-flex justify-content-between align-items-center border-bottom-0">
+        <h3 class="mb-0">لیست برندها</h3>
+        <div>
+            <a asp-area="Admin" asp-controller="Brands" asp-action="Add" class="btn btn-outline-success btn-sm" role="button">افزودن برند جدید</a>
+            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="collapse" data-target="#collapse-search" aria-expanded="false" aria-controls="collapse-search">فیلتر</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="collapse mb-3" id="collapse-search">
+            <div class="card text-right border-0 filters-card rounded-lg">
+                <div class="card-body">
+                    <form method="get" asp-area="Admin" asp-controller="Brands" asp-action="List">
+                        <div class="row">
+                            <div class="form-group col-12 col-md-6 col-xl-4">
+                                <label for="brand-id">شناسه</label>
+                                <input type="text" class="form-control" name="id" id="brand-id" />
+                            </div>
+                            <div class="form-group col-12 col-md-6 col-xl-4">
+                                <label for="brand-title">عنوان</label>
+                                <input type="text" class="form-control" name="title" id="brand-title" />
+                            </div>
+                            <div class="form-group col-12 col-md-6 col-xl-4">
+                                <label for="brand-slug">اسلاگ</label>
+                                <input type="text" class="form-control" name="slug" id="brand-slug" />
+                            </div>
+                            <div class="form-group col-12 col-md-6 col-xl-4 row">
+                                <label for="" class="col-form-label pt-0 col-12">وضعیت</label>
+                                <div class="form-check custom-form-check col-3">
+                                    <input class="form-check-input" type="radio" name="state" id="enable-state" value="1">
+                                    <label class="form-check-label" for="enable-state">فعال</label>
+                                </div>
+                                <div class="form-check custom-form-check col-3">
+                                    <input class="form-check-input" type="radio" name="state" id="disable-state" value="2">
+                                    <label class="form-check-label" for="disable-state">غیرفعال</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary float-left">فیلتر برندها</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <table class="table table-hover table-striped text-right table-responsive-lg">
+            <thead class="bg-primary">
+                <tr>
+                    <th>#</th>
+                    <th>نام</th>
+                    <th>اسلاگ</th>
+                    <th>وضعیت</th>
+                    <th>ایجاد کننده</th>
+                    <th>آخرین ویرایش</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="align-middle">@item.Id</td>
+                            <td class="align-middle">
+                                <a asp-area="Admin" asp-controller="Brands" asp-action="Details" asp-route-id="@item.Id" class="h5 text-decoration-none product-link">@item.Title</a>
+                                <br />
+                                <span class="text-muted">شناسه: @item.Id</span>
+                            </td>
+                            <td class="align-middle text-uppercase">@item.Slug</td>
+                            <td class="align-middle @(((byte)item.State == 1) ? "text-success" : "text-danger")">@(((byte)item.State == 1) ? "فعال" : "غیرفعال")</td>
+                            <td class="align-middle">
+                                <span>@item.Creator.FullName</span>
+                                <br />
+                                <span class="text-muted">@item.CreateDate?.ToPersianDate()</span>
+                            </td>
+                            <td class="align-middle">
+                                <span>@(item.LastModifier != null ? item.LastModifier.FullName : "--")</span>
+                                <br />
+                                <span class="text-muted">@(item.LastModifyDate != null ? item.LastModifyDate.Value.ToPersianDate() : "--")</span>
+                            </td>
+                            <td class="align-middle text-left">
+                                <div class="dropright">
+                                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton">
+                                        <a asp-area="Admin" asp-controller="Brands" asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">ویرایش</a>
+                                        <a asp-area="Admin" asp-controller="Brands" asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">جزئیات</a>
+                                        <a asp-area="Admin" asp-controller="Brands" asp-action="Delete" asp-route-id="@item.Id" class="dropdown-item text-danger">حذف</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="align-middle text-info text-center" colspan="7">برندی برای نمایش وجود ندارد.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- Start pagiantion -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center mb-0">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End pagiantion -->
+    </div>
+</div>

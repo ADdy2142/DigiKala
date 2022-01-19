@@ -1,0 +1,177 @@
+﻿.full-height {
+    min-height: 100vh;
+    position: relative;
+}
+
+.account-side-bg {
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.account-side-bg-image {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.account-content {
+    position: absolute;
+    display: block;
+    width: 33%;
+    top: 50%;
+    left: 50%;
+    padding: 1rem;
+    background-color: #ffffff;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -o-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    -ms-border-radius: 1rem;
+    border-radius: 1rem;
+}
+
+.content-top-image {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    padding: 1rem;
+}
+
+.content-top-image-image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.account-form {
+}
+
+.account-form-group {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.account-form-label {
+    display: block;
+    width: 100%;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: #673AB7;
+    margin-bottom: 1rem;
+}
+
+.account-form-input {
+    display: block;
+    width: 100%;
+    outline: none !important;
+    border: 1px solid #673ab7;
+    -ms-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    padding: 0.5rem 1rem;
+    -ms-transition: var(--transition);
+    -o-transition: var(--transition);
+    -webkit-transition: var(--transition);
+    transition: var(--transition);
+}
+
+    .account-form-input:focus {
+        border-color: #5E35B1;
+        box-shadow: 0 0 10px #5E35B1;
+    }
+
+.account-form-group-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    -ms-align-items: center;
+    -o-align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+    .account-form-group-line .account-form-input {
+        display: inline-block;
+        width: auto;
+        box-shadow: none !important;
+    }
+
+    .account-form-group-line .account-form-label {
+        display: inline-block;
+        width: auto;
+        margin-right: 1rem;
+        margin-bottom: 0;
+    }
+
+.account-form-group-actions button {
+    float: right;
+    border-color: #ef5350;
+}
+
+    .account-form-group-actions button .button-text {
+        color: #ef5350;
+    }
+
+    .account-form-group-actions button:hover {
+        background-color: #ef5350;
+    }
+
+        .account-form-group-actions button:hover .button-text {
+            color: #ffffff;
+        }
+
+.account-form-group-actions a {
+    float: left;
+}
+
+.account-form-group-actions .button {
+    width: 150px;
+}
+
+.account-form.sign-up-form {
+    display: flex;
+    flex-direction: row;
+    -o-justify-content: flex-start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    -ms-align-items: flex-start;
+    -o-align-items: flex-start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    -o-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.sign-up-form .account-form-group {
+    display: block;
+    width: 50%;
+}
+
+.account-content.sign-up-content {
+    width: 50%;
+}
+
+.sign-up-content .content-top-image {
+    width: 30%;
+}
+
+.account-form-group.full-width {
+    width: 100%;
+}
+
+.error-text span {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    margin-top: 0.3rem;
+    display: block;
+    color: #ef5350;
+}

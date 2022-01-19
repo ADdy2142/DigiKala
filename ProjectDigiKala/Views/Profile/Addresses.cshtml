@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Address>
+@{
+    ViewBag.Title = "آدرس های ثبت شده";
+    int index = 1;
+}
+
+@section styles
+{
+    <link href="~/css/profile-addresses.css" rel="stylesheet" />
+}
+
+<section id="addresses" class="wide-wrap">
+    <div class="addresses-content-title">
+        <h3 class="addresses-title">آدرس های ثبت شده</h3>
+        <a asp-controller="Profile" asp-action="AddAddress" class="button">
+            <span class="button-text">افزودن آدرس جدید</span>
+        </a>
+    </div>
+    <div class="addresses-content">
+        <ul class="addresses-list">
+            <li class="addresses-item table-header">
+                <span class="addresses-item-index"></span>
+                <span class="addresses-item-province">
+                    <span class="addresses-item-header">استان</span>
+                </span>
+                <span class="addresses-item-city">
+                    <span class="addresses-item-header">شهر</span>
+                </span>
+                <span class="addresses-item-location">
+                    <span class="addresses-item-header">آدرس خانه/محل کار</span>
+                </span>
+                <span class="addresses-item-phone">
+                    <span class="addresses-item-header">تلفن</span>
+                </span>
+                <span class="addresses-item-actions">
+                    <span class="addresses-item-header"></span>
+                </span>
+            </li>
+            @foreach (var address in Model)
+            {
+                <li class="addresses-item">
+                    <span class="addresses-item-index">
+                        <span class="addresses-item-text">@index</span>
+                    </span>
+                    <span class="addresses-item-province">
+                        <span class="addresses-item-text">@address.Province</span>
+                    </span>
+                    <span class="addresses-item-city">
+                        <span class="addresses-item-text">@address.City</span>
+                    </span>
+                    <span class="addresses-item-location">
+                        <span class="addresses-item-text specific-width">@address.Location</span>
+                    </span>
+                    <span class="addresses-item-phone">
+                        <span class="addresses-item-text open-sans-font">@address.Phone</span>
+                    </span>
+                    <form asp-controller="Profile" asp-action="DeleteAddress" method="post" class="addresses-item-actions">
+                        <input type="hidden" name="id" value="@address.Id" />
+                        <a asp-controller="Profile" asp-action="EditAddress" asp-route-id="@address.Id" class="addresses-item-text edit-button">ویرایش</a>
+                        <button type="submit" class="addresses-item-text delete-button">حذف</button>
+                    </form>
+                </li>
+                index++;
+            }
+        </ul>
+    </div>
+</section>

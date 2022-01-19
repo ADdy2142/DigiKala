@@ -1,0 +1,254 @@
+﻿@model Product
+@{
+    ViewBag.Title = "سامسونگ گلکسی اس 8";
+    int index = 0;
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/products-item.css" />
+}
+
+<section id="product-item" class="product-item wide-wrap">
+    <section class="product-header">
+        <div class="product-header-gallery">
+            <div class="product-header-gallery-photo-wrap">
+                <img src="~/images/@Model.Photo" alt="@Model.PrimaryTitle" title="@Model.PrimaryTitle" class="product-header-gallery-photo" />
+            </div>
+        </div>
+        <div class="product-header-detail">
+            <div class="product-titles">
+                <h1 class="product-primary-title">@Model.PrimaryTitle</h1>
+                <h2 class="product-secondary-title">@Model.SecondaryTitle</h2>
+                <ul class="product-info-list">
+                    <li class="product-info-item">گروه: <span class="product-info-value">@Model.Group.Title</span></li>
+                    <li class="product-info-item">برند: <span class="product-info-value">@Model.Brand.Title</span></li>
+                </ul>
+            </div>
+            <form asp-controller="Cart" asp-action="Index" method="get" class="product-detail">
+                <span class="product-detail-title">لطفا کالای مورد نظر خود را انتخاب کنید:</span>
+                <ul class="product-detail-list">
+                    @foreach (var productItem in Model.ProductItems)
+                    {
+                        string tags = "";
+                        int counter = 0;
+                        if (productItem.ProductItemTagValues.Any())
+                        {
+                            foreach (var productItemTagValue in productItem.ProductItemTagValues)
+                            {
+                                if (counter > 0)
+                                {
+                                    tags += " - ";
+                                }
+                                tags += $"{productItemTagValue.TagValue.Tag.Title}: {productItemTagValue.TagValue.Title}";
+                                counter++;
+                            }
+                            if (index == 0)
+                            {
+                                <li class="product-detail-item">
+                                    <label class="product-detail-item-label">
+                                        <input type="radio" name="productItemId" value="@productItem.Id" class="product-detail-item-input" checked="checked" />
+                                        <span class="product-detail-item-text">@tags</span>
+                                        <span class="product-detail-item-price">@productItem.Price.ToString("N0") تومان</span>
+                                    </label>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="product-detail-item">
+                                    <label class="product-detail-item-label">
+                                        <input type="radio" name="productItemId" value="@productItem.Id" class="product-detail-item-input" />
+                                        <span class="product-detail-item-text">@tags</span>
+                                        <span class="product-detail-item-price">@productItem.Price.ToString("N0") تومان</span>
+                                    </label>
+                                </li>
+                            }
+                        }
+                        index++;
+                    }
+                </ul>
+                <div class="product-detail-actions clear-fix">
+                    <div class="product-detail-actions-count-wrap">
+                        <label for="count" class="product-detail-actions-text">تعداد:</label>
+                        <div class="product-detail-actions-select-wrap mdi mdi-chevron-down">
+                            <select id="count" name="count" class="product-detail-actions-select">
+                                @for (int i = 1; i <= Model.ProductItems.FirstOrDefault().Quantity; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="button submit-button mdi mdi-cart-plus mdi-24px">
+                        <span class="button-text">افزودن به سبد خرید</span>
+                    </button>
+                </div>
+                @*<p class="product-detail-empty-message">کالای مورد نظر درحال حاضر موجود نمی باشد.</p>*@
+            </form>
+        </div>
+    </section>
+    <section class="product-summary">
+        <div class="product-summary-desc">
+            <span class="product-summary-desc-icon mdi mdi-information-variant mdi-48px"></span>
+            <p class="product-summary-desc-text">@Model.Description</p>
+        </div>
+        <div class="product-summary-keypoint">
+            <div class="product-summary-keypoint-col">
+                <h3 class="product-summary-keypoint-title">نقاط مثبت</h3>
+                <ul class="product-summary-keypoint-list">
+                    @foreach (var keyPoint in Model.KeyPoints.Where(k => k.Type == KeyPointType.Positive))
+                    {
+                        <li class="product-summary-keypoint-item positive-keypoint">@keyPoint.Title</li>
+                    }
+                </ul>
+            </div>
+            <div class="product-summary-keypoint-col">
+                <h3 class="product-summary-keypoint-title">نقاط منفی</h3>
+                <ul class="product-summary-keypoint-list">
+                    @foreach (var keyPoint in Model.KeyPoints.Where(k => k.Type == KeyPointType.Negative))
+                    {
+                        <li class="product-summary-keypoint-item negative-keypoint">@keyPoint.Title</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="product-tab">
+        <ul class="product-tab-headers">
+            <li class="product-tab-headers-item active-tab" data-tab="tabContent0">مشخصات فنی</li>
+            <li class="product-tab-headers-item" data-tab="tabContent1">نظرات کاربران</li>
+        </ul>
+        <div id="tabContent0" class="product-tab-content active-tab">
+            <ul class="product-spec-list">
+                @if (Model.Group.SpecificationGroups.Any())
+                {
+                    @foreach (var specificationGroup in Model.Group.SpecificationGroups)
+                    {
+                        <li class="product-spec-item">
+                            <h4 class="product-spec-item-title">@specificationGroup.Title:</h4>
+                            <ul class="product-spec-item-value-list">
+                                @if (specificationGroup.Specifications.Any())
+                                {
+                                    @foreach (var specification in specificationGroup.Specifications)
+                                    {
+                                        <li class="product-spec-item-value-item">
+                                            <h5 class="spec-title">@specification.Title</h5>
+                                            <span class="spec-value">@specification.SpecificationValue?.Value</span>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div id="tabContent1" class="product-tab-content">
+            <div class="product-comments">
+                <div class="product-comments-actions">
+                    <form asp-controller="Product" asp-action="SendComment" method="post" class="product-comments-actions-form clear-fix">
+                        <label class="product-comments-actions-label">متن نظر</label>
+                        <textarea class="product-comments-actions-input" name="comment"></textarea>
+                        <button type="submit" class="button">
+                            <span class="button-text">ارسال نظر</span>
+                        </button>
+                    </form>
+                    @*<div class="product-comments-login-message-wrap">
+                            <span class="product-comments-login-message-text">برای ارسال نظر در سایت ابتدا باید وارد حساب کاربری خود شوید.</span>
+                            <a href="#" class="button">
+                                <span class="button-text">ورود به سایت</span>
+                            </a>
+                        </div>*@
+                </div>
+                <div class="product-comments-content">
+                    <div class="product-comments-main-content">
+                        <div class="product-list-actions-pager">
+                            <a href="#" class="product-list-actions-pager-button">1</a>
+                            <span class="product-list-actions-pager-seperator">...</span>
+                            <a href="#" class="product-list-actions-pager-button">5</a>
+                            <a href="#" class="product-list-actions-pager-button active-pager">6</a>
+                            <a href="#" class="product-list-actions-pager-button">7</a>
+                            <span class="product-list-actions-pager-seperator">...</span>
+                            <a href="#" class="product-list-actions-pager-button">22</a>
+                        </div>
+                        <ul class="product-comments-list">
+                            <li class="product-comments-item">
+                                <div class="product-comments-item-header">
+                                    <span class="product-comments-item-header-sender">عادل بخشی</span>
+                                    <span class="product-comments-item-header-date">29 اسفند 1399</span>
+                                </div>
+                                <p class="product-comments-item-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که</p>
+                                <span class="product-comments-item-score">امتیاز کاربر: 5</span>
+                            </li>
+                            <li class="product-comments-item">
+                                <div class="product-comments-item-header">
+                                    <span class="product-comments-item-header-sender">عادل بخشی</span>
+                                    <span class="product-comments-item-header-date">29 اسفند 1399</span>
+                                </div>
+                                <p class="product-comments-item-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که</p>
+                                <span class="product-comments-item-score">امتیاز کاربر: 3</span>
+                            </li>
+                        </ul>
+                        @*<p class="product-comments-empty-message">هیچ موردی برای نمایش وجود ندارد.</p>*@
+                    </div>
+                    <div class="product-comments-side-content">
+                        <div class="product-comments-side-content-score-wrap">
+                            <h4 class="product-comments-side-content-score-title">نمرات کاربران به این محصول</h4>
+                            <ul class="comment-score-list">
+                                <li class="comment-score-item">
+                                    <div class="comment-score-item-value-wrap">
+                                        <span class="comment-score-item-title">امتیاز:</span>
+                                        <span class="comment-score-item-value">5</span>
+                                    </div>
+                                    <div class="comment-score-item-progress">
+                                        <div class="comment-score-item-progress-inner" style="width: 64%;"></div>
+                                    </div>
+                                    <small class="comment-score-item-progress-persentage">64%</small>
+                                </li>
+                                <li class="comment-score-item">
+                                    <div class="comment-score-item-value-wrap">
+                                        <span class="comment-score-item-title">امتیاز:</span>
+                                        <span class="comment-score-item-value">4</span>
+                                    </div>
+                                    <div class="comment-score-item-progress">
+                                        <div class="comment-score-item-progress-inner" style="width: 3%;"></div>
+                                    </div>
+                                    <small class="comment-score-item-progress-persentage">3%</small>
+                                </li>
+                                <li class="comment-score-item">
+                                    <div class="comment-score-item-value-wrap">
+                                        <span class="comment-score-item-title">امتیاز:</span>
+                                        <span class="comment-score-item-value">3</span>
+                                    </div>
+                                    <div class="comment-score-item-progress">
+                                        <div class="comment-score-item-progress-inner" style="width: 12%;"></div>
+                                    </div>
+                                    <small class="comment-score-item-progress-persentage">12%</small>
+                                </li>
+                                <li class="comment-score-item">
+                                    <div class="comment-score-item-value-wrap">
+                                        <span class="comment-score-item-title">امتیاز:</span>
+                                        <span class="comment-score-item-value">2</span>
+                                    </div>
+                                    <div class="comment-score-item-progress">
+                                        <div class="comment-score-item-progress-inner" style="width: 7%;"></div>
+                                    </div>
+                                    <small class="comment-score-item-progress-persentage">7%</small>
+                                </li>
+                                <li class="comment-score-item">
+                                    <div class="comment-score-item-value-wrap">
+                                        <span class="comment-score-item-title">امتیاز:</span>
+                                        <span class="comment-score-item-value">1</span>
+                                    </div>
+                                    <div class="comment-score-item-progress">
+                                        <div class="comment-score-item-progress-inner" style="width: 14%;"></div>
+                                    </div>
+                                    <small class="comment-score-item-progress-persentage">14%</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

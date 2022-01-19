@@ -1,0 +1,66 @@
+﻿@model SignInViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="دیجی کالا, DigiKala, سایت دیجی کالا, فروشگاه اینترنتی دیجی کالا" />
+    <meta name="description" content="فروشگاه اینترنتی دیجی کالا. انواع کالاهای دیجیتال، لوازم منزل، خوراک، پوشاک، صنایع دستی و ..." />
+
+    <!-- Start styles -->
+    <link rel="stylesheet" href="~/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="~/css/index.css" />
+    <link rel="stylesheet" href="~/css/account.css" />
+    <!-- End styles -->
+
+    <title>ورود - DigiKala</title>
+</head>
+<body>
+    <div class="full-height">
+        <div class="account-side-bg">
+            <img src="~/images/account-side-bg.png" alt="Account side background" class="account-side-bg-image" />
+        </div>
+        <div class="account-content md-shadow">
+            <div class="content-top-image">
+                <img src="~/images/login-top-image.jpg" alt="Login top image" class="content-top-image-image" />
+            </div>
+            <form asp-controller="Account" asp-action="SignIn" method="post" class="account-form">
+                <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+                <div asp-validation-summary="All" class="validation-summary-errors"></div>
+                <div class="account-form-group">
+                    <label asp-for="Email" class="account-form-label">نام کاربری یا ایمیل</label>
+                    <input type="text" asp-for="Email" value="" class="account-form-input open-sans-font" />
+                </div>
+                <div class="account-form-group">
+                    <label asp-for="Password" class="account-form-label">کلمه عبور</label>
+                    <input type="password" asp-for="Password" value="" class="account-form-input" />
+                </div>
+                <div class="account-form-group account-form-group-line">
+                    <input type="checkbox" asp-for="RememberMe" value="false" class="account-form-input" />
+                    <label asp-for="RememberMe" class="account-form-label">مرا به خاطر بسپار</label>
+                </div>
+                <div class="account-form-group account-form-group-actions clear-fix">
+                    <button type="submit" class="button">
+                        <span class="button-text">ورود</span>
+                    </button>
+                    <a asp-controller="Account" asp-action="SignUp" class="button">
+                        <span class="button-text">ثبت نام</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Start scripts -->
+    <script src="~/jquery/jquery.min.js"></script>
+    <script src="~/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/index.js"></script>
+    <!-- End scripts -->
+</body>
+</html>

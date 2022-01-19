@@ -1,0 +1,56 @@
+﻿@model AddKeyPointViewModel
+@{
+    ViewBag.Title = "افزودن نکته کلیدی";
+}
+
+@section breadcrumb {
+    <!-- Start breadcrumb -->
+    <nav page-breadcrumbs="@ViewBag.Breadcrumbs"></nav>
+    <!-- End breadcrumb -->
+}
+
+<div class="card mb-5">
+    <div class="card-header text-right d-flex justify-content-between align-items-center border-bottom-0">
+        <h3 class="mb-0">افزودن نکته کلیدی</h3>
+        <div>
+            <a asp-area="Admin" asp-controller="KeyPoints" asp-action="List" asp-route-productId="@Model.ProductId" class="btn btn-outline-success btn-sm" role="button">لیست نکات کلیدی</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-area="Admin" asp-controller="KeyPoints" asp-action="Add" asp-antiforgery="true" class="text-right">
+            <div class="row">
+                <div asp-validation-summary="All" class="col-12 text-danger"></div>
+                <input type="hidden" asp-for="ProductId" />
+                <div class="form-group col-12">
+                    <label asp-for="Title">عنوان</label>
+                    <input type="text" asp-for="Title" class="form-control" />
+                </div>
+                <div class="form-group col-12 col-md-6 row">
+                    <label for="" class="col-form-label pt-0 col-12">نوع</label>
+                    <div class="form-check custom-form-check col-3">
+                        <input class="form-check-input" type="radio" name="Type" id="positive-type" value="1" checked>
+                        <label class="form-check-label" for="positive-type">نکته مثبت</label>
+                    </div>
+                    <div class="form-check custom-form-check col-3">
+                        <input class="form-check-input" type="radio" name="Type" id="negative-type" value="2">
+                        <label class="form-check-label" for="negative-type">نکته منفی</label>
+                    </div>
+                    <small class="small text-info d-block col-12">لطفا در انتخاب نوع نکته کلیدی دقت کنید.</small>
+                </div>
+                <div class="form-group col-12 col-md-6 row">
+                    <label for="" class="col-form-label pt-0 col-12">وضعیت</label>
+                    <div class="form-check custom-form-check col-3">
+                        <input class="form-check-input" type="radio" name="State" id="enable-state" value="1" checked>
+                        <label class="form-check-label" for="enable-state">فعال</label>
+                    </div>
+                    <div class="form-check custom-form-check col-3">
+                        <input class="form-check-input" type="radio" name="State" id="disable-state" value="2">
+                        <label class="form-check-label" for="disable-state">غیرفعال</label>
+                    </div>
+                    <small class="small text-info d-block col-12">لطفا در انتخاب وضعیت نکته کلیدی دقت کنید.</small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success float-left">ذخیره</button>
+        </form>
+    </div>
+</div>

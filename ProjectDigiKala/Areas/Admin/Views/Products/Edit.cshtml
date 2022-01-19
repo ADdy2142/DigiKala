@@ -1,0 +1,71 @@
+﻿@model EditProductViewModel
+@{
+    ViewBag.Title = "ویرایش کالا";
+}
+
+@section breadcrumb {
+    <!-- Start breadcrumb -->
+    <nav page-breadcrumbs="@ViewBag.Breadcrumbs"></nav>
+    <!-- End breadcrumb -->
+}
+
+<div class="card mb-5">
+    <div class="card-header text-right d-flex justify-content-between align-items-center border-bottom-0">
+        <h3 class="mb-0">ویرایش کالا</h3>
+        <div>
+            <a asp-area="Admin" asp-controller="Products" asp-action="List" class="btn btn-outline-success btn-sm" role="button">لیست کالاها</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-area="Admin" asp-controller="Products" asp-action="Edit" class="text-right" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="col-12 text-danger" asp-validation-summary="All"></div>
+                <div class="form-group col-12 col-md-6">
+                    <label asp-for="PrimaryTitle">نام اصلی</label>
+                    <input type="text" class="form-control" asp-for="PrimaryTitle">
+                </div>
+                <div class="form-group col-12 col-md-6">
+                    <label asp-for="SecondaryTitle">نام دوم</label>
+                    <input type="text" class="form-control" asp-for="SecondaryTitle">
+                </div>
+                <div class="form-group col-12">
+                    <label asp-for="Description">توضیحات</label>
+                    <textarea class="form-control" asp-for="Description" rows="5"></textarea>
+                </div>
+                <div class="form-group col-12 col-md-6 col-xl-4">
+                    <label for="brands">برند</label>
+                    <select class="form-control" asp-items="Model.Brands" id="brands" asp-for="BrandId">
+                        <option class="text-uppercase" selected disabled>انتخاب برند...</option>
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-6 col-xl-4">
+                    <label for="groups">گروه</label>
+                    <select class="form-control" asp-items="Model.Groups" id="groups" asp-for="GroupId">
+                        <option class="text-uppercase" selected disabled>انتخاب گروه...</option>
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-6 col-xl-4 row">
+                    <label for="" class="col-form-label pt-0 col-12">وضعیت</label>
+                    <div class="form-check custom-form-check col-3">
+                        <input class="form-check-input" type="radio" name="State" id="enable-state" value="1" @(((byte)Model.State) == 1 ? "checked" : null)>
+                        <label class="form-check-label" for="product-state">فعال</label>
+                    </div>
+                    <div class="form-check custom-form-check col-3">
+                        <input class="form-check-input" type="radio" name="State" id="disable-state" value="2" @(((byte)Model.State) == 2 ? "checked" : null)>
+                        <label class="form-check-label" for="disable-state">غیرفعال</label>
+                    </div>
+                    <small class="col-12 text-info small">لطفا در انتخاب وضعیت دقت فرمایید.</small>
+                </div>
+                <div class="form-group col-12">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="ProductPhoto" id="photo" accept=".png, .jpg, .jpeg">
+                        <label class="custom-file-label" for="photo">انتخاب تصویر...</label>
+                        <small class="text-info small">در صورتی که تمایل به تغییر تصویر محصول کنونی دارید تصویری را انتخاب کنید.</small>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success float-left">ذخیره</button>
+        </form>
+    </div>
+</div>

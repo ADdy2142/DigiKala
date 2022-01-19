@@ -1,0 +1,158 @@
+﻿.addresses-content-title {
+    display: flex;
+    flex-direction: row;
+    -o-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -ms-align-items: center;
+    -o-align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.addresses-title {
+    display: block;
+    padding: 1rem;
+    font-size: 1.8rem;
+    line-height: 2;
+    font-family: EstedadFontBold, sans-serif;
+    color: #222222;
+}
+
+.addresses-content {
+}
+
+.addresses-list {
+    list-style: none;
+    border: 1px solid #cccccc;
+    -ms-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.addresses-item {
+    display: flex;
+    flex-direction: row;
+    -o-justify-content: flex-start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    -ms-align-items: center;
+    -o-align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+    .addresses-item.table-header {
+        background-color: #eeeeee;
+    }
+
+    .addresses-item:not(.table-header) {
+        border-bottom: 1px dashed #616161;
+    }
+
+        .addresses-item:not(.table-header):last-child {
+            border-bottom: none;
+        }
+
+.addresses-item-index {
+    -webkit-flex: 0.5;
+    -ms-flex: 0.5;
+    -o-flex: 0.5;
+    flex: 0.5;
+}
+
+.addresses-item-province {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    -o-flex: 2;
+    flex: 2;
+}
+
+.addresses-item-city {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    -o-flex: 2;
+    flex: 2;
+}
+
+.addresses-item-location {
+    -webkit-flex: 4;
+    -ms-flex: 4;
+    -o-flex: 4;
+    flex: 4;
+}
+
+.addresses-item-phone {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    -o-flex: 2;
+    flex: 2;
+}
+
+.addresses-item-actions {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    -o-flex: 2;
+    flex: 2;
+}
+
+.addresses-item-header {
+    display: block;
+    width: 100%;
+    font-size: 1.6rem;
+    line-height: 2;
+    font-family: EstedadFontBold, sans-serif;
+    color: #ef5350;
+    padding: 1.3rem 0;
+}
+
+.addresses-item-text {
+    display: block;
+    width: 100%;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: #616161;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 1rem 0;
+    vertical-align: middle;
+}
+
+    .addresses-item-text.specific-width {
+        width: 330px;
+    }
+
+.edit-button {
+    display: inline-block;
+    width: auto;
+    border: none;
+    background-color: transparent;
+    margin-left: 1rem;
+    -ms-transition: var(--transition);
+    -o-transition: var(--transition);
+    -webkit-transition: var(--transition);
+    transition: var(--transition);
+}
+
+    .edit-button:hover {
+        color: #FF8F00;
+    }
+
+.delete-button {
+    display: inline-block;
+    width: auto;
+    border: none !important;
+    outline: none !important;
+    background-color: transparent;
+    cursor: pointer;
+    -ms-transition: var(--transition);
+    -o-transition: var(--transition);
+    -webkit-transition: var(--transition);
+    transition: var(--transition);
+}
+
+    .delete-button:hover {
+        color: #f44336;
+    }
